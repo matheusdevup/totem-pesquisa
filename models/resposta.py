@@ -1,4 +1,3 @@
-import sqlite3
 from database.connection import conectar
 from datetime import datetime
 
@@ -36,3 +35,25 @@ def consultar_respostas_por_pesquisa(conexao, pesquisa_id):
     cursor.close()
 
     return respostas
+
+def funcionario_ja_respondeu_pesquisa(funcionario_id, pesquisa_id):
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    comando_sql = """
+        SELECT 1
+        FROM respostas AS r
+        INNER JOIN perguntas AS p
+            ON r.pergunta_id = p.id
+        WHERE r.funcionario_id = ?
+          AND p.pesquisa_id = ?
+        LIMIT 1
+    """
+
+    cursor.execute(comando_sql, (funcionario_id, pesquisa_id))
+    resultado = cursor.fetchone()
+
+    cursor.close()
+    conexao.close()
+
+    return resultado is not None
