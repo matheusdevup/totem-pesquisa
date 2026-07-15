@@ -5,12 +5,7 @@ from models.resposta import (
     cadastrar_respostas,
     funcionario_ja_respondeu_pesquisa
 )
-from services.validacao_resposta import (
-    validar_resposta_escala,
-    validar_resposta_numero,
-    validar_resposta_sim_nao,
-    validar_resposta_texto
-)
+from services.resposta_pergunta import obter_resposta
 
 
 def autenticar_funcionario():
@@ -31,100 +26,84 @@ def autenticar_funcionario():
     return funcionario
 
 def selecionar_pesquisa():
-    print("\n=== PESQUISAS DISPONÍVEIS ===")
 
-    pesquisas = consultar_pesquisas()
+    while True:
 
-    if not pesquisas:
-        print("\nNão existem pesquisas disponíveis.")
-        return None
+        print("\n=== PESQUISAS DISPONÍVEIS ===")
 
-    for pesquisa in pesquisas:
-        print(f"[{pesquisa[0]}] {pesquisa[1]}")
+        pesquisas = consultar_pesquisas()
 
-    print("[0] Encerrar atendimento")
+        if not pesquisas:
+            print("\nNão existem pesquisas disponíveis.")
+            return None
 
-    entrada_pesquisa = input("\nDigite o ID da pesquisa: ").strip()
+        for pesquisa in pesquisas:
+            print(f"[{pesquisa[0]}] {pesquisa[1]}")
 
-    if not entrada_pesquisa.isdigit():
-        print(
-            "\nOpção inválida. "
-            "Digite somente o número da pesquisa."
-        )
-        return None
+        print("[0] Encerrar atendimento")
 
-    pesquisa_id = int(entrada_pesquisa)
+        entrada_pesquisa = input(
+            "\nDigite o ID da pesquisa: "
+        ).strip()
 
-    if pesquisa_id == 0:
-        print("\nAtendimento encerrado.")
-        return None
+        if not entrada_pesquisa.isdigit():
+            print(
+                "\nOpção inválida. "
+                "Digite somente o número da pesquisa."
+            )
+            continue
 
-    for pesquisa in pesquisas:
-        if pesquisa[0] == pesquisa_id:
-            return pesquisa_id
+        pesquisa_id = int(entrada_pesquisa)
 
-    print("\nPesquisa inválida.")
-    return None
+        if pesquisa_id == 0:
+            print("\nAtendimento encerrado.")
+            return None
 
-def responder_pesquisa(funcionario,pesquisa_id):
+        for pesquisa in pesquisas:
+            if pesquisa[0] == pesquisa_id:
+                return pesquisa_id
+
+        print("\nPesquisa inválida.")
+
+def responder_pesquisa(funcionario, pesquisa_id):
+
     perguntas = consultar_perguntas(pesquisa_id)
 
+    if not perguntas:
+        print("\nPesquisa inválida ou sem perguntas cadastradas.")
+        return
+
     if funcionario_ja_respondeu_pesquisa(
-            funcionario[0],
-            pesquisa_id
+        funcionario[0],
+        pesquisa_id
     ):
         print("\nVocê já respondeu esta pesquisa.")
         return
-    
+
     for pergunta in perguntas:
-        tipo = pergunta[3].strip().lower()
-        obrigatoria = pergunta[4] == 1
 
         print(f"\n{pergunta[2]}")
 
-        if obrigatoria:
+        if pergunta[4]:
             print("* Pergunta obrigatória")
         else:
-            print(
-                "Pergunta opcional. "
-                "Pressione Enter para pular."
-            )
+            print("Pergunta opcional. Pressione Enter para pular.")
 
-        if tipo == "escala":
-            resposta = validar_resposta_escala(
-                pergunta[6],
-                pergunta[7],
-                obrigatoria
-            )
-
-        elif tipo == "numero":
-            resposta = validar_resposta_numero(
-                obrigatoria
-            )
-
-        elif tipo == "sim_nao":
-            resposta = validar_resposta_sim_nao(
-                obrigatoria
-            )
-
-        elif tipo == "texto":
-            resposta = validar_resposta_texto(
-                obrigatoria
-            )
-
-        else:
-            print(
-                f"Tipo de pergunta não reconhecido: {tipo}"
-            )
+        resposta = obter_resposta(pergunta)
 
         if resposta is None:
             print("Pergunta ignorada.")
             continue
+
         cadastrar_respostas(
             funcionario[0],
             pergunta[0],
             resposta
         )
+
+    print("\nPesquisa respondida com sucesso!")
+
+
 
 
 if __name__ == "__main__":
