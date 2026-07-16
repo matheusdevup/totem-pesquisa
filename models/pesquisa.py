@@ -16,7 +16,7 @@ def cadastrar_pesquisa (titulo,descricao,imagem,data_inicio,data_fim,) :
 def consultar_pesquisas():
     conexao = conectar()
     cursor = conexao.cursor()
-    cursor.execute("SELECT id , titulo FROM pesquisa ")
+    cursor.execute("SELECT * FROM pesquisa")
     pesquisas = cursor.fetchall()
     conexao.close()
     return pesquisas

@@ -1,0 +1,559 @@
+/* ================= CONFIGURAÇÕES GLOBAIS ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #F4F4F4;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.page-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+/* Faixa vermelha na extrema esquerda */
+.left-red-bar {
+    width: 25px;
+    background-color: #FF0D1D;
+    height: 100%;
+    flex-shrink: 0;
+}
+
+/* ================= LADO ESQUERDO: FORMULÁRIO (LOGIN) ================= */
+.login-section {
+    flex: 1.1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.login-content {
+    width: 100%;
+    max-width: 480px;
+}
+
+.logo-container {
+    margin-bottom: 50px;
+}
+
+.logo {
+    max-width: 280px;
+    height: auto;
+}
+
+.title-container {
+    margin-bottom: 35px;
+}
+
+.title-container h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #1A1A1A;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Triângulo Vermelho */
+.red-triangle {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 18px solid #FF0D1D;
+    margin-left: -25px; /* Recua para a esquerda no desktop */
+}
+
+.subtitle {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    color: #666666;
+    margin-top: 5px;
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.input-icon {
+    position: absolute;
+    left: 20px;
+    color: #666666;
+    display: flex;
+    align-items: center;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 18px 20px 18px 60px;
+    font-size: 1.3rem;
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 1px;
+    border: 1.5px solid #AFAFAF;
+    border-radius: 8px;
+    background-color: transparent;
+    color: #333;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.input-group input:focus {
+    border-color: #FF0D1D;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 18px;
+    background-color: #FF0D1D;
+    color: #FFFFFF;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-submit:hover {
+    background-color: #D60514;
+}
+
+.btn-submit:active {
+    transform: scale(0.99);
+}
+
+/* ================= LADO DIREITO: IMAGEM COM DIAGONAL ================= */
+.image-section {
+    flex: 1.3;
+    background-image: url('../img/empresa.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    clip-path: polygon(18% 0%, 100% 0%, 100% 100%, 0% 100%);
+    margin-left: -10%;
+    z-index: 1;
+}
+
+/* Decorativos */
+.dots-top, .dots-bottom {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    opacity: 0.15;
+    background-image: radial-gradient(#000000 1.5px, transparent 1.5px);
+    background-size: 12px 12px;
+}
+
+.dots-top {
+    top: 40px;
+    right: 40px;
+}
+
+.dots-bottom {
+    bottom: 40px;
+    left: 40px;
+}
+
+/* ================= TELA DE PESQUISAS (DASHBOARD) ================= */
+.dashboard-body {
+    background-color: #F4F4F4;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.dashboard-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px 24px;
+    flex-shrink: 0;
+    position: relative;
+    border-right: 1px solid #EAEAEA;
+}
+
+.sidebar::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    background-color: #FF0D1D;
+}
+
+.sidebar-logo {
+    max-width: 180px;
+    height: auto;
+    margin-bottom: 50px;
+    display: block;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 16px 20px;
+    text-decoration: none;
+    color: #555555;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.menu-item:hover {
+    background-color: #F9F9F9;
+    color: #1a1a1a;
+}
+
+.menu-item.active {
+    background-color: #FEECEE;
+    color: #FF0D1D;
+}
+
+.menu-icon {
+    stroke: currentColor;
+    flex-shrink: 0;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+}
+
+.exit-system {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 16px 20px;
+    text-decoration: none;
+    color: #666666;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: color 0.2s;
+}
+
+.exit-system:hover {
+    color: #FF0D1D;
+}
+
+/* Conteúdo Principal */
+.main-content {
+    flex: 1;
+    padding: 50px 80px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.user-welcome h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #1A1A1A;
+}
+
+.user-welcome .username {
+    color: #1A1A1A;
+}
+
+.user-welcome p {
+    font-size: 1rem;
+    color: #666666;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+/* Seção de Título */
+.section-title-container {
+    position: relative;
+    margin-bottom: 35px;
+}
+
+.section-title h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #1A1A1A;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.section-title p {
+    font-size: 1rem;
+    color: #666666;
+    margin-left: 30px;
+    margin-top: 4px;
+}
+
+/* Grid de Cards */
+.cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.survey-card {
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    display: flex;
+    overflow: hidden;
+    height: 180px;
+    border: 1.5px solid #EAEAEA;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.survey-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+}
+
+.card-banner {
+    width: 32%;
+    background-size: cover;
+    background-position: center;
+    background-color: #EAEAEA;
+    position: relative;
+}
+
+.card-info {
+    flex: 1;
+    padding: 30px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-header-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-header-info h3 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #1A1A1A;
+}
+
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-badge::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-badge.disponivel {
+    background-color: #E2F6EA;
+    color: #219653;
+}
+.status-badge.disponivel::before {
+    background-color: #219653;
+}
+
+.status-badge.respondida {
+    background-color: #DEF3E6;
+    color: #27AE60;
+}
+.status-badge.respondida::before {
+    background-color: #27AE60;
+}
+
+.card-meta {
+    font-size: 0.9rem;
+    color: #777777;
+    display: flex;
+    gap: 20px;
+    font-weight: 500;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-action {
+    align-self: flex-end;
+    padding: 14px 30px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-respond {
+    background-color: #FF0D1D;
+    color: #FFFFFF;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-respond:hover {
+    background-color: #D60514;
+}
+
+.answered-feedback {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.answered-feedback span {
+    color: #777777;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.btn-disabled {
+    background-color: #F2F2F2;
+    color: #4F4F4F;
+    border: 1px solid #D6D6D6;
+    cursor: not-allowed;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dashboard-footer-text {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #999999;
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+/* ================= AJUSTE EXCLUSIVO PARA CELULARES / DISPOSITIVOS PEQUENOS ================= */
+@media (max-width: 900px) {
+    .page-container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .left-red-bar {
+        display: none;
+    }
+
+    .image-section {
+        display: none;
+    }
+
+    .login-section {
+        padding: 24px;
+        width: 100%;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-content {
+        width: 100%;
+        max-width: 100%;
+        min-width: unset;
+        text-align: center;
+    }
+
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 40px;
+    }
+
+    .title-container h2 {
+        font-size: 1.8rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .red-triangle {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .subtitle {
+        text-align: center;
+        margin-top: 8px;
+    }
+
+    form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .input-group {
+        width: 100%;
+    }
+
+    .btn-submit {
+        width: 100%;
+    }
+
+    .dots-top, .dots-bottom {
+        display: none;
+    }
+}
