@@ -1,0 +1,473 @@
+/* ===========================
+   RESET
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body{
+    background:#f5f6fa;
+    color:#222;
+}
+
+/* ===========================
+   LAYOUT
+=========================== */
+
+.dashboard-container{
+    display:flex;
+    min-height:100vh;
+}
+
+/* ===========================
+   SIDEBAR
+=========================== */
+
+.sidebar{
+
+    width:280px;
+    background:#fff;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+
+    border-right:1px solid #e5e5e5;
+
+}
+
+.sidebar-top{
+    padding:40px 25px;
+}
+
+.sidebar-logo{
+
+    width:190px;
+    display:block;
+    margin:auto;
+    margin-bottom:50px;
+
+}
+
+.sidebar-menu{
+
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+
+}
+
+.menu-item{
+
+    text-decoration:none;
+    color:#d80000;
+
+    padding:18px;
+
+    border-radius:12px;
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    font-size:17px;
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.menu-item:hover{
+
+    background:#f7f7f7;
+
+}
+
+.active{
+
+    background:#f4f4f4;
+
+    border-left:5px solid red;
+
+}
+
+.sidebar-bottom{
+
+    padding:30px;
+
+}
+
+.exit-system{
+
+    color:#555;
+    text-decoration:none;
+    font-size:17px;
+
+}
+
+/* ===========================
+   MAIN
+=========================== */
+
+.main-content{
+
+    flex:1;
+    padding:40px;
+
+}
+
+/* ===========================
+   HEADER
+=========================== */
+
+.page-header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+
+    margin-bottom:35px;
+
+}
+
+.back-link{
+
+    color:#e40000;
+    text-decoration:none;
+    font-size:15px;
+
+}
+
+.page-header h1{
+
+    margin-top:15px;
+    font-size:45px;
+
+}
+
+.page-header p{
+
+    color:#777;
+    margin-top:8px;
+
+}
+
+.btn-outline{
+
+    border:2px solid #ff2b2b;
+
+    background:white;
+
+    color:#ff2b2b;
+
+    padding:14px 25px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+}
+
+/* ===========================
+   GRID
+=========================== */
+
+.content-grid{
+
+    display:grid;
+
+    grid-template-columns:
+
+            1fr
+            1.4fr
+            1fr;
+
+    gap:30px;
+
+}
+
+/* ===========================
+   CARDS
+=========================== */
+
+.card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    box-shadow:
+
+    0 8px 25px rgba(0,0,0,.05);
+
+}
+
+.card h2{
+
+    margin-bottom:25px;
+
+    border-left:5px solid red;
+
+    padding-left:12px;
+
+}
+
+/* ===========================
+   FORM
+=========================== */
+
+.form-group{
+
+    margin-bottom:22px;
+
+}
+
+.form-group label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+input,
+textarea,
+select{
+
+    width:100%;
+
+    padding:13px;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+
+    outline:none;
+
+    font-size:15px;
+
+}
+
+textarea{
+
+    resize:none;
+
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+
+    border-color:red;
+
+}
+
+.row{
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+.row .form-group{
+
+    flex:1;
+
+}
+
+.switch{
+
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+
+}
+
+/* ===========================
+   BOTÕES
+=========================== */
+
+.buttons{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:30px;
+
+    gap:15px;
+
+}
+
+.btn-primary{
+
+    flex:1;
+
+    background:#ff1010;
+
+    color:white;
+
+    border:none;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+}
+
+.btn-primary:hover{
+
+    background:#d90000;
+
+}
+
+.btn-secondary{
+
+    flex:1;
+
+    background:white;
+
+    border:2px solid #ddd;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+}
+
+.btn-secondary:hover{
+
+    background:#f5f5f5;
+
+}
+
+.btn-link{
+
+    margin-top:15px;
+
+    border:none;
+
+    background:none;
+
+    color:red;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+}
+
+/* ===========================
+   OPÇÕES
+=========================== */
+
+.options input{
+
+    margin-bottom:12px;
+
+}
+
+/* ===========================
+   PERGUNTAS
+=========================== */
+
+.question-item{
+
+    background:#fafafa;
+
+    border:1px solid #eee;
+
+    border-radius:12px;
+
+    padding:18px;
+
+    margin-bottom:15px;
+
+}
+
+.question-item h4{
+
+    margin-bottom:8px;
+
+    font-size:16px;
+
+}
+
+.question-item span{
+
+    font-size:13px;
+
+    color:#777;
+
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+
+footer{
+
+    margin-top:40px;
+
+    text-align:center;
+
+    color:#777;
+
+}
+
+/* ===========================
+   RESPONSIVO
+=========================== */
+
+@media(max-width:1400px){
+
+.content-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.sidebar{
+
+display:none;
+
+}
+
+.main-content{
+
+padding:25px;
+
+}
+
+.page-header{
+
+flex-direction:column;
+gap:20px;
+
+}
+
+}

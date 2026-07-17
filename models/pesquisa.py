@@ -66,6 +66,22 @@ def excluir_pesquisa (id):
     print ("Pesquisa foi deletada com sucesso!")
     conexao.close()
 
+def ultima_pesquisa():
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT MAX(id)
+        FROM pesquisa
+    """)
+
+    id = cursor.fetchone()[0]
+
+    conexao.close()
+
+    return id
+
 if __name__ == "__main__":
     cadastrar_pesquisa(
         "Clima Organizacional 2026",

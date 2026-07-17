@@ -3,132 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MACPET - Pesquisas Disponíveis</title>
-    <!-- Importando as fontes -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>Pesquisas | Macpet</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body class="dashboard-body">
+<body>
 
     <div class="dashboard-container">
 
-        <!-- SIDEBAR (Barra Lateral Esquerda) -->
+        <!-- ========================================= -->
+        <!-- SIDEBAR                                   -->
+        <!-- ========================================= -->
         <aside class="sidebar">
             <div class="sidebar-top">
-                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="MACPET" class="sidebar-logo">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" class="sidebar-logo" alt="Macpet">
 
                 <nav class="sidebar-menu">
-                    <!-- Item comum para todos (Funcionário e Admin) -->
-                    <a href="#" class="menu-item active">
-                        <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                        Pesquisas
+                    <a href="{{ url_for('pesquisas') }}" class="menu-item active">
+                        <span>📋</span>
+                        <span>Pesquisas</span>
                     </a>
 
-                    <!-- OPÇÕES EXCLUSIVAS DO ADMIN (Aparecem logo abaixo) -->
-                    {% if session.get('user_role') == 'admin' %}
-                    <a href="#" class="menu-item admin-item">
-                        <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                        Nova Pesquisa
-                    </a>
-                    <a href="#" class="menu-item admin-item">
-                        <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
-                        Relatórios
-                    </a>
+                    {% if usuario.role == "admin" %}
+                        <a href="{{ url_for('admin.nova_pesquisa') }}" class="menu-item">
+                            <span>➕</span>
+                            <span>Nova Pesquisa</span>
+                        </a>
+                        <a href="#" class="menu-item">
+                            <span>📊</span>
+                            <span>Relatórios</span>
+                        </a>
                     {% endif %}
                 </nav>
             </div>
 
-            <!-- Único botão de Sair mantido no rodapé da Sidebar -->
             <div class="sidebar-bottom">
-                <a href="{{ url_for('logout') }}" class="exit-system">
-                    <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                    Sair do sistema
+                <a href="{{ url_for('logout') }}" class="logout-button">
+                    🚪 Sair
                 </a>
             </div>
         </aside>
 
-        <!-- CONTEÚDO PRINCIPAL (Lado Direito) -->
+        <!-- ========================================= -->
+        <!-- CONTEÚDO                                  -->
+        <!-- ========================================= -->
         <main class="main-content">
-
-            <!-- Cabeçalho de Boas-vindas (Sem o botão 'Sair' duplicado no topo) -->
-            <header class="dashboard-header">
-                <div class="user-welcome">
-                    <h1>Olá, <span class="username">{{ usuario.nome }}</span>!</h1>
-                    <p>Pesquisa de Satisfação</p>
+            <header class="top-header">
+                <div>
+                    <h1>Olá, <span>{{ usuario.nome }}</span></h1>
+                    <p>Bem-vindo ao Sistema de Pesquisas Macpet.</p>
                 </div>
             </header>
 
-            <!-- Seção de Título -->
-            <section class="section-title-container">
-                <div class="dots-decor"></div>
-                <div class="section-title">
-                    <h2><span class="red-triangle"></span> PESQUISAS DISPONÍVEIS</h2>
-                    <p>Sua opinião ajuda a melhorar a Macpet</p>
-                </div>
+            <!-- ========================================= -->
+            <!-- TÍTULO                                    -->
+            <!-- ========================================= -->
+            <section class="section-title">
+                <h2>Pesquisas Disponíveis</h2>
+                <p>Escolha uma pesquisa para responder.</p>
             </section>
 
-            <!-- Lista de Cards de Pesquisa -->
-            <!-- Lista de Cards de Pesquisa -->
-<section class="cards-container">
+            <!-- ========================================= -->
+            <!-- GRID DAS PESQUISAS                        -->
+            <!-- ========================================= -->
+            <section class="cards-grid">
+                {% if pesquisas %}
+                    {% for pesquisa in pesquisas %}
+                        <div class="survey-card">
+                            <div class="card-image">
+                                {% if pesquisa[4] %}
+                                    <img src="{{ url_for('static', filename='img/' + pesquisa[4]) }}" alt="{{ pesquisa[2] }}">
+                                {% else %}
+                                    <img src="{{ url_for('static', filename='img/banner_padrao.png') }}" alt="Pesquisa">
+                                {% endif %}
+                            </div>
 
-    {% if pesquisas %}
+                            <div class="card-content">
+                                <div class="card-top">
+                                    <h3>{{ pesquisa[2] }}</h3>
+                                    <span class="status {{ pesquisa[1]|lower }}">{{ pesquisa[1] }}</span>
+                                </div>
 
-        {% for pesquisa in pesquisas %}
+                                <p class="descricao">{{ pesquisa[3] }}</p>
 
-        <div class="survey-card">
+                                <div class="datas">
+                                    <span>📅 {{ pesquisa[5] }}</span>
+                                    <span>até</span>
+                                    <span>{{ pesquisa[6] }}</span>
+                                </div>
 
-            <!-- Banner -->
-            <div class="card-banner"
-                 style="background-image: url('{{ url_for('static', filename='img/' ~ pesquisa[3]) }}');">
-            </div>
+                                <div class="card-buttons">
+                                    <a href="{{ url_for('pesquisas') }}" class="btn-primary">Responder Pesquisa</a>
+                                    {% if usuario.role == "admin" %}
+                                        <a href="#" class="btn-secondary">
+                                            Editar
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">
+                        <img src="{{ url_for('static', filename='img/logo.png') }}" class="empty-logo">
+                        <h2>Nenhuma pesquisa cadastrada.</h2>
+                        <p>Assim que uma pesquisa for criada ela aparecerá aqui.</p>
 
-            <!-- Informações -->
-            <div class="card-info">
+                        {% if usuario.role == "admin" %}
+                            <a href="{{ url_for('admin.nova_pesquisa') }}" class="btn-primary">Criar Primeira Pesquisa</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </section>
 
-                <div class="card-header-info">
-                    <h3>{{ pesquisa[1] }}</h3>
-
-                    <span class="status-badge">
-                        {{ pesquisa[6] }}
-                    </span>
-                </div>
-
-                <p class="card-description">
-                    {{ pesquisa[2] }}
-                </p>
-
-                <p class="card-meta">
-                    <span class="meta-item">
-                        📅 {{ pesquisa[4] }} até {{ pesquisa[5] }}
-                    </span>
-                </p>
-
-                <a href="#" class="btn-action btn-respond">
-                    RESPONDER AGORA →
-                </a>
-
-            </div>
-
-        </div>
-
-        {% endfor %}
-
-    {% else %}
-
-        <div class="empty-state">
-            <h3>Nenhuma pesquisa disponível.</h3>
-            <p>Aguarde até que um administrador publique uma pesquisa.</p>
-        </div>
-
-    {% endif %}
-
-</section>
-            <footer class="dashboard-footer-text">
-                © 2026 Macpet Indústria de Embalagens Pet. Todos os direitos reservados.
-            </footer>
         </main>
+
     </div>
 
 </body>

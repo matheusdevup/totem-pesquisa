@@ -1,10 +1,278 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Pesquisa - Macpet</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/nova_pesquisa.css') }}">
 </head>
-<body>
+<body class="np-body">
+
+  <div class="np-edge-bar"></div>
+
+  <div class="np-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="np-sidebar">
+      <div class="np-sidebar-top">
+        <img class="np-logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Macpet">
+        <p class="np-logo-caption">INDÚSTRIA DE EMBALAGENS PET</p>
+      </div>
+
+      <nav class="np-menu">
+        <a href="{{ url_for('pesquisa.listar_pesquisas') }}" class="np-menu-item np-menu-item--active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6a1 1 0 0 1 1 1v2H8V3a1 1 0 0 1 1-1Z"/><rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 12h6M9 16h6"/></svg>
+          Pesquisas
+        </a>
+      </nav>
+
+      <a href="{{ url_for('login.logout') }}" class="np-logout">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        Sair do sistema
+      </a>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="np-main">
+
+      <div class="np-topbar">
+        <a href="{{ url_for('pesquisa.listar_pesquisas') }}" class="np-back-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Voltar para pesquisas
+        </a>
+
+        <button type="button" class="np-btn np-btn--outline np-btn--preview" id="btnVisualizarPesquisa">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>
+          Visualizar pesquisa
+        </button>
+      </div>
+
+      <div class="np-header">
+        <h1>Nova Pesquisa</h1>
+        <p>Crie sua pesquisa e adicione as perguntas</p>
+      </div>
+
+      <form id="formNovaPesquisa" class="np-grid" method="POST" action="{{ url_for('admin.nova_pesquisa') }}">
+
+        <!-- CARD 1 -->
+        <section class="np-card">
+          <h2 class="np-card-title"><span class="np-title-bar"></span>Dados da Pesquisa</h2>
+
+          <div class="np-field">
+            <label for="titulo">Título da pesquisa <span class="np-required">*</span></label>
+            <input type="text" id="titulo" name="titulo" placeholder="Ex: Pesquisa de Satisfação" required>
+          </div>
+
+          <div class="np-field">
+            <label for="descricao">Descrição</label>
+            <textarea id="descricao" name="descricao" rows="3" placeholder="Descreva o objetivo da sua pesquisa..."></textarea>
+          </div>
+
+          <div class="np-field">
+            <label>Imagem do banner (opcional)</label>
+            <label for="banner" class="np-dropzone">
+              <input type="file" id="banner" name="banner" accept="image/png, image/jpeg" hidden>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4.6 4.4 0 0 1 0-9 5 4.5 0 0 1 9.5-2 4.5 4.5 0 0 1 3.5 4.5A4 4 0 0 1 19 18H7Z"/><path d="M12 12v6M9.5 14.5 12 12l2.5 2.5"/></svg>
+              <p class="np-dropzone-title">Clique para enviar ou arraste a imagem aqui</p>
+              <p class="np-dropzone-hint">Formatos: JPG, PNG. Tamanho recomendado: 1200x400px</p>
+            </label>
+          </div>
+
+          <div class="np-field-row">
+            <div class="np-field">
+              <label for="data_inicio">Data de início <span class="np-required">*</span></label>
+              <div class="np-input-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                <input type="text" id="data_inicio" name="data_inicio" placeholder="dd/mm/aaaa" required>
+              </div>
+            </div>
+            <div class="np-field">
+              <label for="data_termino">Data de término <span class="np-required">*</span></label>
+              <div class="np-input-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                <input type="text" id="data_termino" name="data_termino" placeholder="dd/mm/aaaa" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="np-field">
+            <label for="status">Status da pesquisa</label>
+            <div class="np-select-status">
+              <span class="np-status-dot np-status-dot--publicada"></span>
+              <select id="status" name="status">
+                <option value="publicada">Publicada</option>
+                <option value="rascunho">Rascunho</option>
+                <option value="encerrada">Encerrada</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="np-card-actions">
+            <button type="submit" name="acao" value="rascunho" class="np-btn np-btn--outline">SALVAR RASCUNHO</button>
+            <button type="submit" name="acao" value="publicar" class="np-btn np-btn--primary">PUBLICAR PESQUISA</button>
+          </div>
+        </section>
+
+        <!-- CARD 2 -->
+        <section class="np-card">
+          <h2 class="np-card-title"><span class="np-title-bar"></span>Adicionar Pergunta</h2>
+
+          <div class="np-field">
+            <label for="texto_pergunta">Texto da pergunta <span class="np-required">*</span></label>
+            <textarea id="texto_pergunta" name="texto_pergunta" rows="2" placeholder="Digite sua pergunta aqui..."></textarea>
+          </div>
+
+          <div class="np-field-row np-field-row--tipo">
+            <div class="np-field">
+              <label for="tipo_resposta">Tipo de resposta <span class="np-required">*</span></label>
+              <div class="np-select-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg>
+                <select id="tipo_resposta" name="tipo_resposta">
+                  <option value="" disabled selected>Selecione o tipo</option>
+                  <option value="unica">Múltipla escolha (única)</option>
+                  <option value="multipla">Múltipla escolha (várias)</option>
+                  <option value="escala">Escala de Satisfação</option>
+                  <option value="aberta">Resposta aberta</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="np-field np-field--switch">
+              <label for="obrigatoria">Pergunta obrigatória</label>
+              <label class="np-switch">
+                <input type="checkbox" id="obrigatoria" name="obrigatoria" checked>
+                <span class="np-switch-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="np-field">
+            <label>Opções de resposta</label>
+            <div class="np-options-list" id="listaOpcoes">
+              <div class="np-option-row">
+                <span class="np-drag-handle">⠿</span>
+                <span class="np-option-radio"></span>
+                <input type="text" name="opcoes[]" placeholder="Opção de resposta">
+                <button type="button" class="np-icon-btn np-remove-option">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+                </button>
+              </div>
+              <div class="np-option-row">
+                <span class="np-drag-handle">⠿</span>
+                <span class="np-option-radio"></span>
+                <input type="text" name="opcoes[]" placeholder="Opção de resposta">
+                <button type="button" class="np-icon-btn np-remove-option">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+                </button>
+              </div>
+              <div class="np-option-row">
+                <span class="np-drag-handle">⠿</span>
+                <span class="np-option-radio"></span>
+                <input type="text" name="opcoes[]" placeholder="Opção de resposta">
+                <button type="button" class="np-icon-btn np-remove-option">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+                </button>
+              </div>
+              <div class="np-option-row">
+                <span class="np-drag-handle">⠿</span>
+                <span class="np-option-radio"></span>
+                <input type="text" name="opcoes[]" placeholder="Opção de resposta">
+                <button type="button" class="np-icon-btn np-remove-option">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+                </button>
+              </div>
+              <div class="np-option-row">
+                <span class="np-drag-handle">⠿</span>
+                <span class="np-option-radio"></span>
+                <input type="text" name="opcoes[]" placeholder="Opção de resposta">
+                <button type="button" class="np-icon-btn np-remove-option">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <button type="button" class="np-add-option" id="btnAdicionarOpcao">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              Adicionar opção
+            </button>
+          </div>
+
+          <div class="np-card-actions">
+            <button type="button" class="np-btn np-btn--outline" id="btnLimparPergunta">LIMPAR</button>
+            <button type="button" class="np-btn np-btn--primary" id="btnAdicionarPergunta">ADICIONAR PERGUNTA</button>
+          </div>
+        </section>
+
+        <!-- CARD 3 -->
+        <section class="np-card np-card--lista">
+          <h2 class="np-card-title">
+            <span class="np-title-bar"></span>Perguntas da pesquisa
+            <span class="np-badge-count" id="contadorPerguntas">3</span>
+          </h2>
+          <p class="np-card-subtitle">Arraste para reordenar as perguntas</p>
+
+          <div class="np-question-list" id="listaPerguntas">
+            <div class="np-question-item">
+              <span class="np-drag-handle">⠿</span>
+              <div class="np-question-content">
+                <p class="np-question-text">1. Como você avalia o ambiente de trabalho na Macpet?</p>
+                <div class="np-tags">
+                  <span class="np-tag">Escala de Satisfação</span>
+                  <span class="np-tag np-tag--required">Obrigatória</span>
+                </div>
+              </div>
+              <button type="button" class="np-icon-btn np-question-menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+              </button>
+            </div>
+
+            <div class="np-question-item">
+              <span class="np-drag-handle">⠿</span>
+              <div class="np-question-content">
+                <p class="np-question-text">2. Você se sente valorizado(a) pela empresa?</p>
+                <div class="np-tags">
+                  <span class="np-tag">Escala de Satisfação</span>
+                  <span class="np-tag np-tag--required">Obrigatória</span>
+                </div>
+              </div>
+              <button type="button" class="np-icon-btn np-question-menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+              </button>
+            </div>
+
+            <div class="np-question-item">
+              <span class="np-drag-handle">⠿</span>
+              <div class="np-question-content">
+                <p class="np-question-text">3. Deixe seu comentário ou sugestão</p>
+                <div class="np-tags">
+                  <span class="np-tag">Resposta aberta</span>
+                  <span class="np-tag np-tag--optional">Opcional</span>
+                </div>
+              </div>
+              <button type="button" class="np-icon-btn np-question-menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="np-tip-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <div>
+              <p class="np-tip-title">Dica</p>
+              <p class="np-tip-text">Você pode reordenar as perguntas arrastando os itens para cima ou para baixo.</p>
+            </div>
+          </div>
+        </section>
+
+      </form>
+
+      <footer class="np-footer">
+        © 2024 Macpet Indústria de Embalagens Pet. Todos os direitos reservados.
+      </footer>
+
+    </main>
+  </div>
 
 </body>
 </html>
