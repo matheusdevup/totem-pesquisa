@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pesquisas | Macpet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
+<body class="dashboard-body">
 
-    <div class="dashboard-container">
+    <div class="page-container">
+        <div class="left-red-bar"></div>
 
         <!-- ========================================= -->
         <!-- SIDEBAR                                   -->
@@ -18,7 +20,8 @@
                 <img src="{{ url_for('static', filename='img/logo.png') }}" class="sidebar-logo" alt="Macpet">
 
                 <nav class="sidebar-menu">
-                    <a href="{{ url_for('pesquisas') }}" class="menu-item active">
+                    <!-- Ajustado de 'pesquisas' para 'home' para carregar na raiz '/' -->
+                    <a href="{{ url_for('home') }}" class="menu-item active">
                         <span>📋</span>
                         <span>Pesquisas</span>
                     </a>
@@ -36,87 +39,104 @@
                 </nav>
             </div>
 
+            <!-- Botão Sair inferior restaurado com a classe correta do seu CSS -->
             <div class="sidebar-bottom">
-                <a href="{{ url_for('logout') }}" class="logout-button">
-                    🚪 Sair
+                <a href="{{ url_for('logout') }}" class="exit-system">
+                    🚪 Sair do sistema
                 </a>
             </div>
         </aside>
 
         <!-- ========================================= -->
-        <!-- CONTEÚDO                                  -->
+        <!-- CONTEÚDO PRINCIPAL                        -->
         <!-- ========================================= -->
         <main class="main-content">
-            <header class="top-header">
+            <header class="dashboard-header">
+                <div class="user-welcome">
+                    <h1>Olá, <span class="username">{{ usuario.nome }}</span>!</h1>
+                    <p>Pesquisa de Satisfação</p>
+                </div>
                 <div>
-                    <h1>Olá, <span>{{ usuario.nome }}</span></h1>
-                    <p>Bem-vindo ao Sistema de Pesquisas Macpet.</p>
+                    <!-- Botão Sair superior do Totem -->
+                    <a href="{{ url_for('logout') }}" class="exit-system" style="color: #FF0D1D; text-decoration: none; font-weight: bold; display: flex; align-items: center; gap: 8px;">
+                        🚪 Sair
+                    </a>
                 </div>
             </header>
 
-            <!-- ========================================= -->
-            <!-- TÍTULO                                    -->
-            <!-- ========================================= -->
-            <section class="section-title">
-                <h2>Pesquisas Disponíveis</h2>
-                <p>Escolha uma pesquisa para responder.</p>
+            <section class="section-title-container">
+                <div class="section-title">
+                    <h2><span class="red-triangle"></span> PESQUISAS DISPONÍVEIS</h2>
+                    <p>Sua opinião ajuda a melhorar a Macpet</p>
+                </div>
             </section>
 
             <!-- ========================================= -->
-            <!-- GRID DAS PESQUISAS                        -->
+            <!-- GRID DE CARDS                             -->
             <!-- ========================================= -->
-            <section class="cards-grid">
+            <section class="cards-container">
                 {% if pesquisas %}
                     {% for pesquisa in pesquisas %}
                         <div class="survey-card">
-                            <div class="card-image">
-                                {% if pesquisa[4] %}
-                                    <img src="{{ url_for('static', filename='img/' + pesquisa[4]) }}" alt="{{ pesquisa[2] }}">
-                                {% else %}
-                                    <img src="{{ url_for('static', filename='img/banner_padrao.png') }}" alt="Pesquisa">
-                                {% endif %}
-                            </div>
 
-                            <div class="card-content">
-                                <div class="card-top">
-                                    <h3>{{ pesquisa[2] }}</h3>
-                                    <span class="status {{ pesquisa[1]|lower }}">{{ pesquisa[1] }}</span>
+                            <!-- Banner dinâmico: usa a string de pesquisa[4] direto no caminho da imagem -->
+                            {% if pesquisa[4] %}
+                                <div class="card-banner" style="background-image: url('{{ url_for('static', filename='img/' + pesquisa[4]) }}');"></div>
+                            {% else %}
+                                <div class="card-banner" style="background-image: url('{{ url_for('static', filename='img/banner_padrao.png') }}');"></div>
+                            {% endif %}
+
+                            <div class="card-info">
+                                <div class="card-header-info">
+                                    <!-- pesquisa[3] é o TÍTULO REAL (ex: Clima Organizacional 2026) -->
+                                    <h3>{{ pesquisa[3] }}</h3>
+
+                                    <span class="status-badge {{ pesquisa[1]|lower }}">
+                                        {{ pesquisa[1] }}
+                                    </span>
                                 </div>
 
-                                <p class="descricao">{{ pesquisa[3] }}</p>
+                                <!-- pesquisa[2] é a DESCRIÇÃO REAL -->
+                                <p class="descricao" style="color: #666666; font-size: 0.95rem; margin: 10px 0;">
+                                    {{ pesquisa[2] }}
+                                </p>
 
-                                <div class="datas">
-                                    <span>📅 {{ pesquisa[5] }}</span>
-                                    <span>até</span>
-                                    <span>{{ pesquisa[6] }}</span>
-                                </div>
+                                <div class="answered-feedback">
+                                    <div class="card-meta">
+                                        <div class="meta-item">
+                                            📋 Pesquisa rápida
+                                        </div>
+                                        <div class="meta-item">
+                                            📅 {{ pesquisa[5] }} até {{ pesquisa[6] }}
+                                        </div>
+                                    </div>
 
-                                <div class="card-buttons">
-                                    <a href="{{ url_for('pesquisas') }}" class="btn-primary">Responder Pesquisa</a>
-                                    {% if usuario.role == "admin" %}
-                                        <a href="#" class="btn-secondary">
-                                            Editar
-                                    </a>
+                                    {% if pesquisa[1]|lower == 'disponivel' %}
+                                        <a href="#" class="btn-action btn-respond">
+                                            RESPONDER AGORA ➔
+                                        </a>
+                                    {% else %}
+                                        <button class="btn-action btn-disabled" disabled>
+                                            ✓ PESQUISA RESPONDIDA
+                                        </button>
                                     {% endif %}
                                 </div>
                             </div>
+
                         </div>
                     {% endfor %}
                 {% else %}
-                    <div class="empty-state">
-                        <img src="{{ url_for('static', filename='img/logo.png') }}" class="empty-logo">
+                    <div class="card" style="text-align: center; padding: 50px;">
                         <h2>Nenhuma pesquisa cadastrada.</h2>
                         <p>Assim que uma pesquisa for criada ela aparecerá aqui.</p>
-
-                        {% if usuario.role == "admin" %}
-                            <a href="{{ url_for('admin.nova_pesquisa') }}" class="btn-primary">Criar Primeira Pesquisa</a>
-                        {% endif %}
                     </div>
                 {% endif %}
             </section>
 
+            <footer class="dashboard-footer-text">
+                © 2024 Macpet Indústria de Embalagens Pet. Todos os direitos reservados.
+            </footer>
         </main>
-
     </div>
 
 </body>

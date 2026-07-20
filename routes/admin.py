@@ -3,14 +3,14 @@ from models.pesquisa import cadastrar_pesquisa
 
 admin = Blueprint("admin", __name__)
 
-@admin.route("/admin/nova-pesquisa", methods=["GET", "POST"])
+@admin.route("/admin/nova_pesquisa", methods=["GET", "POST"])
 def nova_pesquisa():
 
     if "user_cpf" not in session:
         return redirect(url_for("home"))
 
     if session.get("user_role") != "admin":
-        return redirect(url_for("pesquisas"))
+        return redirect(url_for("home"))
 
     if request.method == "POST":
 
@@ -28,6 +28,6 @@ def nova_pesquisa():
             data_fim
         )
 
-        return redirect(url_for("pesquisas"))
+        return redirect(url_for("home"))
 
     return render_template("admin/nova_pesquisa.html")
