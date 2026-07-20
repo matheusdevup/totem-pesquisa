@@ -19,7 +19,7 @@
   font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
   color: var(--mp-text);
 }
-
+/*Faixa vermelha lateral*/
 .np-edge-bar{
   position: fixed;
   left:0; top:0; bottom:0;
@@ -27,7 +27,7 @@
   background: var(--mp-red);
   z-index: 20;
 }
-
+/*Margem lateral*/
 .np-layout{
   display:flex;
   min-height:100vh;
@@ -48,6 +48,7 @@
   height:100vh;
 }
 
+/*Logo*/
 .np-sidebar-top{ margin-bottom:40px; }
 .np-logo{ max-width:180px; display:block; }
 .np-logo-caption{
@@ -109,20 +110,21 @@
   font-weight:600;
   font-size:14px;
 }
-
+/*titulo*/
 .np-header{ margin-bottom:28px; }
 .np-header h1{
   margin:0 0 6px;
   font-size:28px;
   font-weight:700;
 }
+/*Sub titulo*/
 .np-header p{
   margin:0;
   color: var(--mp-text-muted);
   font-size:14px;
 }
 
-/* BUTTONS */
+/* BUTTONS visulaizar pesquisa*/
 .np-btn{
   display:inline-flex;
   align-items:center;
@@ -210,7 +212,7 @@
 .np-field label{ font-size:13px; font-weight:600; color: var(--mp-text); }
 .np-required{ color: var(--mp-red); }
 
-.np-field input[type="text"],
+.np-input-icon input{ padding-left:38px; }
 .np-field textarea,
 .np-field select{
   width:100%;

@@ -53,7 +53,11 @@
         <p>Crie sua pesquisa e adicione as perguntas</p>
       </div>
 
-      <form id="formNovaPesquisa" class="np-grid" method="POST" action="{{ url_for('admin.nova_pesquisa') }}">
+      <form id="formNovaPesquisa"
+            class="np-grid"
+            method="POST"
+            enctype="multipart/form-data"
+            action="{{ url_for('admin.nova_pesquisa') }}">
 
         <!-- CARD 1 -->
         <section class="np-card">
@@ -88,10 +92,10 @@
               </div>
             </div>
             <div class="np-field">
-              <label for="data_termino">Data de término <span class="np-required">*</span></label>
+              <label for="data_fim">Data de término <span class="np-required">*</span></label>
               <div class="np-input-icon">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                <input type="text" id="data_termino" name="data_termino" placeholder="dd/mm/aaaa" required>
+                <input type="text" id="data_fim" name="data_fim" placeholder="dd/mm/aaaa" required>
               </div>
             </div>
           </div>

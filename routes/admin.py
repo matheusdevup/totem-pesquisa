@@ -1,6 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 from models.pesquisa import cadastrar_pesquisa
 
+import os
+from werkzeug.utils import secure_filename
+
+
 admin = Blueprint("admin", __name__)
 
 @admin.route("/admin/nova_pesquisa", methods=["GET", "POST"])
@@ -16,18 +20,34 @@ def nova_pesquisa():
 
         titulo = request.form["titulo"]
         descricao = request.form["descricao"]
-        imagem = request.form["imagem"]
+        banner = request.files["banner"]
         data_inicio = request.form["data_inicio"]
         data_fim = request.form["data_fim"]
+
+        nome_imagem = ""
+
+        if banner and banner.filename != "":
+            nome_imagem = secure_filename(banner.filename)
+
+            caminho = os.path.join(
+                "static",
+                "img",
+                nome_imagem
+            )
+
+            banner.save(caminho)
 
         cadastrar_pesquisa(
             titulo,
             descricao,
-            imagem,
+            nome_imagem,
             data_inicio,
             data_fim
         )
 
         return redirect(url_for("home"))
+
+
+
 
     return render_template("admin/nova_pesquisa.html")
