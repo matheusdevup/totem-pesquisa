@@ -54,13 +54,7 @@
             <header class="dashboard-header">
                 <div class="user-welcome">
                     <h1>Olá, <span class="username">{{ usuario.nome }}</span>!</h1>
-                    <p>Pesquisa de Satisfação</p>
-                </div>
-                <div>
-                    <!-- Botão Sair superior do Totem -->
-                    <a href="{{ url_for('logout') }}" class="exit-system" style="color: #FF0D1D; text-decoration: none; font-weight: bold; display: flex; align-items: center; gap: 8px;">
-                        🚪 Sair
-                    </a>
+                    <p>Ao Totem de Pesquisa</p>
                 </div>
             </header>
 
@@ -80,16 +74,19 @@
                         <div class="survey-card">
 
                             <!-- Banner dinâmico: usa a string de pesquisa[4] direto no caminho da imagem -->
-                            {% if pesquisa[4] %}
-                                <div class="card-banner" style="background-image: url('{{ url_for('static', filename='img/' + pesquisa[4]) }}');"></div>
+                            {% if pesquisa[3] %}
+                                <div class="card-banner"
+                                style="background-image:url('{{ url_for('static', filename='img/' + pesquisa[3]) }}')">
+                                </div>
                             {% else %}
                                 <div class="card-banner" style="background-image: url('{{ url_for('static', filename='img/banner_padrao.png') }}');"></div>
+                                </div>
                             {% endif %}
 
                             <div class="card-info">
                                 <div class="card-header-info">
                                     <!-- pesquisa[3] é o TÍTULO REAL (ex: Clima Organizacional 2026) -->
-                                    <h3>{{ pesquisa[3] }}</h3>
+                                    <h3>{{ pesquisa[1] }}</h3>
 
                                     <span class="status-badge {{ pesquisa[1]|lower }}">
                                         {{ pesquisa[1] }}
@@ -107,11 +104,11 @@
                                             📋 Pesquisa rápida
                                         </div>
                                         <div class="meta-item">
-                                            📅 {{ pesquisa[5] }} até {{ pesquisa[6] }}
+                                            📅 {{ pesquisa[4] }} até {{ pesquisa[5] }}
                                         </div>
                                     </div>
 
-                                    {% if pesquisa[1]|lower == 'disponivel' %}
+                                    {% if pesquisa[6]|lower == 'disponivel' %}
                                         <a href="#" class="btn-action btn-respond">
                                             RESPONDER AGORA ➔
                                         </a>
