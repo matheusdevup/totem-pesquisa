@@ -2,17 +2,17 @@ import sqlite3
 from database.connection import conectar
 
 
-
-def cadastrar_pesquisa (titulo,descricao,imagem,data_inicio,data_fim,) :
+def cadastrar_pesquisa(titulo, descricao, imagem, data_inicio, data_fim):
     conexao = conectar()
     cursor = conexao.cursor()
     cursor.execute(
-        "INSERT INTO pesquisa (status ,titulo , descricao , imagem , data_inicio , data_fim) VALUES (?, ?, ?, ?, ?, ?)",
-        ("Rascunho" , titulo, descricao, imagem, data_inicio, data_fim)
+        "INSERT INTO pesquisa (status, titulo, descricao, imagem, data_inicio, data_fim) VALUES (?, ?, ?, ?, ?, ?)",
+        ("Rascunho", titulo, descricao, imagem, data_inicio, data_fim)
     )
     conexao.commit()
     print("Pesquisa Criada com Sucesso!")
     conexao.close()
+
 
 def consultar_pesquisas():
     conexao = conectar()
@@ -22,6 +22,7 @@ def consultar_pesquisas():
     conexao.close()
     return pesquisas
 
+
 def consultar_pesquisa(id):
     conexao = conectar()
     cursor = conexao.cursor()
@@ -29,6 +30,7 @@ def consultar_pesquisa(id):
     pesquisa = cursor.fetchone()
     conexao.close()
     return pesquisa
+
 
 def atualizar_pesquisa(id, titulo, descricao, imagem, data_inicio, data_fim, status):
     conexao = conectar()
@@ -59,16 +61,17 @@ def atualizar_pesquisa(id, titulo, descricao, imagem, data_inicio, data_fim, sta
     print("Pesquisa atualizada com sucesso!")
     conexao.close()
 
-def excluir_pesquisa (id):
+
+def excluir_pesquisa(id):
     conexao = conectar()
     cursor = conexao.cursor()
-    cursor.execute("DELETE FROM pesquisa WHERE id = ?",(id,))
+    cursor.execute("DELETE FROM pesquisa WHERE id = ?", (id,))
     conexao.commit()
-    print ("Pesquisa foi deletada com sucesso!")
+    print("Pesquisa foi deletada com sucesso!")
     conexao.close()
 
-def ultima_pesquisa():
 
+def ultima_pesquisa():
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -78,10 +81,45 @@ def ultima_pesquisa():
     """)
 
     id = cursor.fetchone()[0]
+    conexao.close()
+    return id
+
+
+def consultar_pesquisas_respondidas_usuario(cpf):
+    conexao = conectar()
+    cursor = conexao.cursor()
+    try:
+        cursor.execute("SELECT DISTINCT pesquisa_id FROM respostas WHERE funcionario_cpf = ?", (cpf,))
+        linhas = cursor.fetchall()
+        respondidas_ids = [linha[0] for linha in linhas]
+    except sqlite3.OperationalError:
+        respondidas_ids = []
 
     conexao.close()
+    return respondidas_ids
 
-    return id
+
+def registrar_resposta_usuario(pesquisa_id, cpf):
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    # Garante que a tabela de respostas exista
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS respostas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            pesquisa_id INTEGER,
+            funcionario_cpf TEXT
+        )
+    """)
+
+    # Insere a confirmação de resposta do usuário
+    cursor.execute(
+        "INSERT INTO respostas (pesquisa_id, funcionario_cpf) VALUES (?, ?)",
+        (pesquisa_id, cpf)
+    )
+    conexao.commit()
+    conexao.close()
+
 
 if __name__ == "__main__":
     cadastrar_pesquisa(

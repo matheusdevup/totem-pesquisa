@@ -1,0 +1,389 @@
+/* ==========================================================
+   RESET & ESTRUTURA GLOBAL
+   ========================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #F7F7F8;
+  color: #1A1D1F;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+/* ==========================================================
+   SIDEBAR
+   ========================================================== */
+.sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  background: #FFFFFF;
+  border-right: 1px solid #E7E9EB;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  height: 100vh;
+}
+
+.logo {
+  padding: 8px 12px 24px 12px;
+}
+
+.logo img {
+  max-width: 160px;
+  height: auto;
+  display: block;
+}
+
+.sidebar-nav {
+  margin-top: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6F767E;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  background: #F1F2F4;
+  color: #1A1D1F;
+}
+
+.nav-item.active {
+  background: #FDEBEC;
+  color: #E4292F;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid #F1F2F4;
+}
+
+/* ==========================================================
+   ÁREA PRINCIPAL
+   ========================================================== */
+.main-content {
+  flex: 1;
+  padding: 28px 48px 100px 48px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+/* CARD DO BANNER (PROPORÇÃO EXPANDIDA) */
+.banner-card {
+  background: #FFFFFF;
+  border: 1px solid #E7E9EB;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  height: 195px;
+  flex-shrink: 0;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 4px rgba(16, 24, 40, 0.05);
+}
+
+.banner-image-container {
+  width: 480px;
+  height: 100%;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.banner-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: left center;
+  display: block;
+}
+
+.banner-content {
+  flex: 1;
+  padding: 0 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.banner-header-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.banner-subtitle {
+  font-size: 12px;
+  color: #6F767E;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #F7F7F8;
+  border: 1px solid #E7E9EB;
+  color: #6F767E;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.banner-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1A1D1F;
+  margin-bottom: 4px;
+}
+
+.banner-description {
+  font-size: 14px;
+  color: #6F767E;
+}
+
+.btn-top-home {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  border: 1px solid #E7E9EB;
+  color: #1A1D1F;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  transition: all 0.2s ease;
+}
+
+.btn-top-home:hover {
+  background: #F1F2F4;
+}
+
+/* BARRA DE PROGRESSO */
+.progress-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+
+.progress-label {
+  font-size: 14px;
+  color: #1A1D1F;
+  white-space: nowrap;
+}
+
+.progress-bar-track {
+  flex: 1;
+  height: 8px;
+  background: #E7E9EB;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: #E4292F;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.progress-percent {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6F767E;
+}
+
+/* FORMULÁRIO & CARD DE PERGUNTA COMPACTO */
+.survey-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.question-card {
+  background: #FFFFFF;
+  border: 1px solid #E7E9EB;
+  border-radius: 16px;
+  padding: 28px 36px;
+  box-shadow: 0 1px 4px rgba(16, 24, 40, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.question-header {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.question-number {
+  font-size: 22px;
+  font-weight: 800;
+  color: #E4292F;
+}
+
+.question-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1A1D1F;
+}
+
+.question-hint {
+  font-size: 13px;
+  color: #6F767E;
+  margin-top: 4px;
+}
+
+/* OPÇÕES DE RESPOSTA HARMONIOSAS */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+.option-card {
+  border: 1px solid #E7E9EB;
+  border-radius: 12px;
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  background: #FFFFFF;
+}
+
+.option-card input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.option-radio {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #E7E9EB;
+  border-radius: 50%;
+  display: inline-block;
+  transition: all 0.2s;
+}
+
+.option-card:hover {
+  border-color: #E4292F;
+  background: #FDEBEC;
+}
+
+.option-card input[type="radio"]:checked ~ .option-radio {
+  border-color: #E4292F;
+  background: #E4292F;
+  box-shadow: inset 0 0 0 4px #FFFFFF;
+}
+
+.option-card input[type="radio"]:checked ~ .option-label {
+  color: #E4292F;
+  font-weight: 700;
+}
+
+.option-emoji {
+  font-size: 32px;
+}
+
+.option-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1A1D1F;
+}
+
+/* FOOTER FIXO */
+.survey-footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 250px;
+  background: #FFFFFF;
+  border-top: 1px solid #E7E9EB;
+  padding: 16px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+  z-index: 10;
+}
+
+.btn-secondary {
+  background: #FFFFFF;
+  border: 1px solid #E7E9EB;
+  color: #1A1D1F;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+  background: #F1F2F4;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #E4292F;
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn-primary:hover {
+  background: #C71F25;
+}

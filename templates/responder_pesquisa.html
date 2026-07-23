@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ pesquisa[1] }} - MACPET</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/responder_pesquisa.css') }}">
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="MACPET">
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="{{ url_for('home') }}" class="nav-item active">
+          <span class="nav-icon">📋</span>
+          <span>Pesquisas</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="{{ url_for('logout') }}" class="nav-item">
+          <span class="nav-icon">↪</span>
+          <span>Sair do sistema</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <!-- CARD DO BANNER -->
+      <section class="banner-card">
+        <div class="banner-image-container">
+          {% if pesquisa[3] %}
+            <img src="{{ url_for('static', filename='img/' + pesquisa[3]) }}" alt="{{ pesquisa[1] }}">
+          {% else %}
+            <img src="{{ url_for('static', filename='img/banner_padrao.png') }}" alt="{{ pesquisa[1] }}">
+          {% endif %}
+        </div>
+
+        <div class="banner-content">
+          <div class="banner-header-row">
+            <span class="banner-subtitle">PESQUISA:</span>
+            <div class="time-badge">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>Tempo estimado: 2 minutos</span>
+            </div>
+          </div>
+
+          <h1 class="banner-title">{{ pesquisa[1] }}</h1>
+          <p class="banner-description">{{ pesquisa[2] if pesquisa[2] else 'Queremos ouvir você sobre o nosso ambiente de trabalho.' }}</p>
+        </div>
+
+        <a href="{{ url_for('home') }}" class="btn-top-home">
+          <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span>Página Inicial</span>
+        </a>
+      </section>
+
+      <!-- BARRA DE PROGRESSO -->
+      <section class="progress-section">
+        <div class="progress-label">Pergunta <strong>1</strong> de <strong>6</strong></div>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" style="width: 16%;"></div>
+        </div>
+        <div class="progress-percent">16%</div>
+      </section>
+
+      <!-- FORMULÁRIO / CARD DA PERGUNTA -->
+      <form id="form-pesquisa" action="{{ url_for('salvar_respostas', id_pesquisa=pesquisa[0]) }}" method="POST" class="survey-form">
+
+        <div class="question-card">
+          <div class="question-header">
+            <span class="question-number">01.</span>
+            <div>
+              <h2 class="question-title">Como você avalia o ambiente de trabalho na Macpet?</h2>
+              <p class="question-hint">Selecione uma opção</p>
+            </div>
+          </div>
+
+          <div class="options-grid">
+            <label class="option-card">
+              <input type="radio" name="resposta" value="excelente">
+              <span class="option-radio"></span>
+              <span class="option-emoji">🙂</span>
+              <span class="option-label">Excelente</span>
+            </label>
+
+            <label class="option-card">
+              <input type="radio" name="resposta" value="bom">
+              <span class="option-radio"></span>
+              <span class="option-emoji">🙂</span>
+              <span class="option-label">Bom</span>
+            </label>
+
+            <label class="option-card">
+              <input type="radio" name="resposta" value="regular">
+              <span class="option-radio"></span>
+              <span class="option-emoji">😐</span>
+              <span class="option-label">Regular</span>
+            </label>
+
+            <label class="option-card">
+              <input type="radio" name="resposta" value="ruim">
+              <span class="option-radio"></span>
+              <span class="option-emoji">🙁</span>
+              <span class="option-label">Ruim</span>
+            </label>
+
+            <label class="option-card">
+              <input type="radio" name="resposta" value="pessimo">
+              <span class="option-radio"></span>
+              <span class="option-emoji">🙁</span>
+              <span class="option-label">Péssimo</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- FOOTER INFERIOR FIXO -->
+        <footer class="survey-footer">
+          <a href="{{ url_for('home') }}" class="btn-secondary">VOLTAR</a>
+          <button type="submit" class="btn-primary">
+            PRÓXIMA PERGUNTA <span class="arrow-icon">→</span>
+          </button>
+        </footer>
+
+      </form>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

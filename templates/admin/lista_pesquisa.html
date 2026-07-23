@@ -14,22 +14,19 @@
     <aside class="sidebar">
       <div class="logo">
         <img src="{{ url_for('static', filename='img/logo.png') }}" alt="MACPET - Indústria de Embalagens PET">
-
       </div>
 
       <nav class="sidebar-nav">
+        <a href="{{ url_for('admin.lista_pesquisas') }}" class="nav-item active">
+          <span class="nav-icon">📋</span>
+          <span>Lista de Pesquisas</span>
+        </a>
 
-    <a href="{{ url_for('admin.lista_pesquisas') }}" class="nav-item active">
-        <span class="nav-icon">📋</span>
-        <span>Lista de Pesquisas</span>
-    </a>
-
-    <a href="{{ url_for('admin.nova_pesquisa') }}" class="nav-item">
-        <span class="nav-icon">➕</span>
-        <span>Nova Pesquisa</span>
-    </a>
-
-</nav>
+        <a href="{{ url_for('admin.nova_pesquisa') }}" class="nav-item">
+          <span class="nav-icon">➕</span>
+          <span>Nova Pesquisa</span>
+        </a>
+      </nav>
 
       <div class="sidebar-footer">
         <a href="{{ url_for('logout') }}" class="nav-item">
@@ -43,47 +40,56 @@
     <main class="main-content">
 
       <!-- HEADER -->
-      <header class="page-header">
+      <header class="page-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px;">
         <div>
           <h1>Gestão de <strong>Pesquisas</strong></h1>
           <p class="subtitle">Crie, edite e gerencie pesquisas</p>
         </div>
-        
+
+        <a href="{{ url_for('home') }}" class="btn-action" style="background-color: #FFFFFF; border: 1.5px solid #EAEAEA; color: #555555; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 10px 18px; border-radius: 8px; font-weight: 700; font-size: 0.95rem; box-shadow: 0 2px 6px rgba(0,0,0,0.04);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span>Página Inicial</span>
+        </a>
       </header>
 
-      <!-- STAT CARDS -->
-      <section class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-icon icon-red">📄</div>
-          <div class="stat-info">
-            <span class="stat-number">8</span>
-            <span class="stat-label">Total de pesquisas criadas</span>
+      <!-- STAT CARDS (ESTATÍSTICAS VINCULADAS AO BANCO) -->
+      <section class="stats-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px;">
+
+        <div class="stat-card" style="background: #FFF; padding: 20px; border-radius: 12px; border: 1px solid #EAEAEA; display: flex; align-items: center; gap: 16px;">
+          <div style="font-size: 1.8rem; background: #FFF0F1; padding: 12px; border-radius: 8px;">📄</div>
+          <div>
+            <h3 style="font-size: 1.6rem; font-weight: 800; color: #1A1A1A;">{{ stats.total }}</h3>
+            <p style="font-size: 0.85rem; color: #666; font-weight: 600;">Total de pesquisas criadas</p>
           </div>
         </div>
 
-        <div class="stat-card">
-          <div class="stat-icon icon-green">✔</div>
-          <div class="stat-info">
-            <span class="stat-number">4</span>
-            <span class="stat-label">Publicadas e ativas</span>
+        <div class="stat-card" style="background: #FFF; padding: 20px; border-radius: 12px; border: 1px solid #EAEAEA; display: flex; align-items: center; gap: 16px;">
+          <div style="font-size: 1.8rem; background: #E2F6EA; padding: 12px; border-radius: 8px;">✓</div>
+          <div>
+            <h3 style="font-size: 1.6rem; font-weight: 800; color: #1A1A1A;">{{ stats.ativas }}</h3>
+            <p style="font-size: 0.85rem; color: #666; font-weight: 600;">Publicadas e ativas</p>
           </div>
         </div>
 
-        <div class="stat-card">
-          <div class="stat-icon icon-yellow">🕒</div>
-          <div class="stat-info">
-            <span class="stat-number">2</span>
-            <span class="stat-label">Programadas para iniciar</span>
+        <div class="stat-card" style="background: #FFF; padding: 20px; border-radius: 12px; border: 1px solid #EAEAEA; display: flex; align-items: center; gap: 16px;">
+          <div style="font-size: 1.8rem; background: #FFF4E5; padding: 12px; border-radius: 8px;">🕒</div>
+          <div>
+            <h3 style="font-size: 1.6rem; font-weight: 800; color: #1A1A1A;">{{ stats.programadas }}</h3>
+            <p style="font-size: 0.85rem; color: #666; font-weight: 600;">Programadas para iniciar</p>
           </div>
         </div>
 
-        <div class="stat-card">
-          <div class="stat-icon icon-gray">🗄</div>
-          <div class="stat-info">
-            <span class="stat-number">2</span>
-            <span class="stat-label">Encerradas</span>
+        <div class="stat-card" style="background: #FFF; padding: 20px; border-radius: 12px; border: 1px solid #EAEAEA; display: flex; align-items: center; gap: 16px;">
+          <div style="font-size: 1.8rem; background: #F2F2F2; padding: 12px; border-radius: 8px;">📇</div>
+          <div>
+            <h3 style="font-size: 1.6rem; font-weight: 800; color: #1A1A1A;">{{ stats.encerradas }}</h3>
+            <p style="font-size: 0.85rem; color: #666; font-weight: 600;">Encerradas</p>
           </div>
         </div>
+
       </section>
 
       <!-- SURVEYS TABLE PANEL -->
@@ -92,19 +98,25 @@
         <div class="panel-header">
           <h2>Minhas Pesquisas</h2>
 
-          <div class="panel-actions">
+          <!-- FORMULÁRIO DE BUSCA E FILTRO -->
+          <form method="GET" action="{{ url_for('admin.lista_pesquisas') }}" class="panel-actions">
             <div class="search-box">
               <span class="search-icon">🔍</span>
-              <input type="text" placeholder="Buscar pesquisa...">
+              <input
+                type="text"
+                name="busca"
+                placeholder="Buscar pesquisa..."
+                value="{{ termo_busca if termo_busca else '' }}"
+              >
             </div>
 
-            <select class="status-filter">
-              <option value="todos">Todos os status</option>
-              <option value="publicada">Publicada</option>
-              <option value="programada">Programada</option>
-              <option value="encerrada">Encerrada</option>
+            <select name="status" class="status-filter" onchange="this.form.submit()">
+                <option value="todos" {% if filtro_status == 'todos' %}selected{% endif %}>Todos os status</option>
+                <option value="ativa" {% if filtro_status in ['ativa', 'publicada'] %}selected{% endif %}>Ativa</option>
+                <option value="programada" {% if filtro_status == 'programada' %}selected{% endif %}>Programada</option>
+                <option value="encerrada" {% if filtro_status == 'encerrada' %}selected{% endif %}>Encerrada</option>
             </select>
-          </div>
+          </form>
         </div>
 
         <table class="surveys-table">
@@ -124,23 +136,24 @@
 
             <tr>
               <td class="col-title">
-                {% if pesquisa[4] %}
-                <img class="thumb" src="{{ url_for('static', filename='img/' + pesquisa[3]) }}" alt="">
+                {% if pesquisa[3] %}
+                <img class="thumb" src="{{ url_for('static', filename='img/' + pesquisa[3]) }}" alt="Banner">
                 {% else %}
-                <img class="thumb" src="{{ url_for('static', filename='img/banner_padrao.png') }}" alt="">
+                <img class="thumb" src="{{ url_for('static', filename='img/banner_padrao.png') }}" alt="Banner Padrão">
                 {% endif %}
                 <div>
-                  <span class="title-main">{{ pesquisa[2] }}</span>
-                  <span class="title-sub">{{ pesquisa[4] }}</span>
+                  <span class="title-main">{{ pesquisa[1] }}</span>
+                  <span class="title-sub">{{ pesquisa[2] }}</span>
                 </div>
               </td>
               <td><span class="tag">Pesquisa</span></td>
               <td>
-                  <span class="status status-{{ pesquisa[1]|lower }}">
-                      {{ pesquisa[1] }}
-                  </span>
+                <!-- STATUS CORRETO BASEADO NO BANCO -->
+                <span class="status status-{{ pesquisa[7]|lower if pesquisa|length > 7 and pesquisa[7] else 'ativa' }}">
+                  {{ pesquisa[7] if pesquisa|length > 7 and pesquisa[7] else (pesquisa[1] if pesquisa[1] in ['Publicada','Encerrada','Programada'] else 'Ativa') }}
+                </span>
               </td>
-              <td>{{ pesquisa[5] }} até {{ pesquisa[6] }}</td>
+              <td>{{ pesquisa[4] }} até {{ pesquisa[5] }}</td>
               <td>-</td>
               <td class="col-actions">
                 <button class="icon-btn" title="Visualizar">👁</button>
@@ -150,21 +163,29 @@
               </td>
             </tr>
 
+            {% else %}
+            <tr>
+              <td colspan="6" style="text-align: center; padding: 30px; color: #888;">
+                Nenhuma pesquisa encontrada.
+              </td>
+            </tr>
             {% endfor %}
 
           </tbody>
         </table>
 
+        <!-- SÓ EXIBE A BARRA DE PAGINAÇÃO SE HOUVER MAIS PESQUISAS QUE O LIMITE PERMITE -->
+        {% if total_pesquisas > per_page %}
         <div class="panel-footer">
-          <span class="pagination-info">Mostrando 1 a 5 de 8 pesquisas</span>
+          <span class="pagination-info">Mostrando {{ pesquisas|length }} de {{ total_pesquisas }} pesquisas</span>
 
           <div class="pagination">
-            <button class="page-btn" disabled>‹</button>
-            <button class="page-btn active">1</button>
-            <button class="page-btn">2</button>
+            <button class="page-btn" {% if page == 1 %}disabled{% endif %}>‹</button>
+            <button class="page-btn active">{{ page }}</button>
             <button class="page-btn">›</button>
           </div>
         </div>
+        {% endif %}
 
       </section>
 

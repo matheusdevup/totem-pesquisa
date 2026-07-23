@@ -10,7 +10,6 @@
 <body class="dashboard-body">
 
     <div class="page-container">
-        
 
         <!-- ========================================= -->
         <!-- SIDEBAR                                   -->
@@ -23,20 +22,16 @@
                      alt="Macpet">
 
                 <nav class="sidebar-menu">
-                    <!-- Ajustado de 'pesquisas' para 'home' para carregar na raiz '/' -->
                     <a href="{{ url_for('admin.lista_pesquisas') }}" class="menu-item">
                         <span>📋</span>
                         <span>Pesquisas</span>
                     </a>
 
                     {% if usuario.role == "admin" %}
-
-
                     {% endif %}
                 </nav>
             </div>
 
-            <!-- Botão Sair inferior restaurado com a classe correta do seu CSS -->
             <div class="sidebar-bottom">
                 <a href="{{ url_for('logout') }}" class="exit-system">
                     🚪 Sair do sistema
@@ -70,19 +65,15 @@
                     {% for pesquisa in pesquisas %}
                         <div class="survey-card">
 
-                            <!-- Banner dinâmico: usa a string de pesquisa[4] direto no caminho da imagem -->
+                            <!-- Banner dinâmico -->
                             {% if pesquisa[3] %}
-                                <div class="card-banner"
-                                style="background-image:url('{{ url_for('static', filename='img/' + pesquisa[3]) }}')">
-                                </div>
+                                <div class="card-banner" style="background-image:url('{{ url_for('static', filename='img/' + pesquisa[3]) }}')"></div>
                             {% else %}
                                 <div class="card-banner" style="background-image: url('{{ url_for('static', filename='img/banner_padrao.png') }}');"></div>
-                                </div>
                             {% endif %}
 
                             <div class="card-info">
                                 <div class="card-header-info">
-                                    <!-- pesquisa[3] é o TÍTULO REAL (ex: Clima Organizacional 2026) -->
                                     <h3>{{ pesquisa[1] }}</h3>
 
                                     <span class="status-badge {{ pesquisa[1]|lower }}">
@@ -90,7 +81,6 @@
                                     </span>
                                 </div>
 
-                                <!-- pesquisa[2] é a DESCRIÇÃO REAL -->
                                 <p class="descricao" style="color: #666666; font-size: 0.95rem; margin: 10px 0;">
                                     {{ pesquisa[2] }}
                                 </p>
@@ -105,25 +95,23 @@
                                         </div>
                                     </div>
 
-                                    {% if pesquisa[6]|lower == 'disponivel' %}
-                                        <a href="#" class="btn-action btn-respond">
-                                            RESPONDER AGORA ➔
-                                        </a>
-                                    {% else %}
-                                        <button class="btn-action btn-disabled" disabled>
-                                            ✓ PESQUISA RESPONDIDA
+                                    {% if pesquisa[0] in respondidas_ids %}
+                                        <!-- SE JÁ RESPONDEU -->
+                                        <button class="btn-respondida" disabled style="background-color: #EAEAEA; color: #666; cursor: not-allowed; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold;">
+                                          ✓ PESQUISA RESPONDIDA
                                         </button>
+                                    {% else %}
+                                        <!-- SE NÃO RESPONDEU -->
+                                        <a href="{{ url_for('responder_pesquisa', id_pesquisa=pesquisa[0]) }}" class="btn-responder" style="background-color: #C8102E; color: white; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; display: inline-block;">
+                                          RESPONDER PESQUISA
+                                        </a>
                                     {% endif %}
                                 </div>
                             </div>
-
                         </div>
                     {% endfor %}
                 {% else %}
-                    <div class="card" style="text-align: center; padding: 50px;">
-                        <h2>Nenhuma pesquisa cadastrada.</h2>
-                        <p>Assim que uma pesquisa for criada ela aparecerá aqui.</p>
-                    </div>
+                    <p style="padding: 20px; color: #666;">Nenhuma pesquisa disponível no momento.</p>
                 {% endif %}
             </section>
 
