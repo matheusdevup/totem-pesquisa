@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão de Pesquisas - MACPET</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/lista_pesquisa.css') }}">
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="MACPET - Indústria de Embalagens PET">
+
+      </div>
+
+      <nav class="sidebar-nav">
+
+    <a href="{{ url_for('admin.lista_pesquisas') }}" class="nav-item active">
+        <span class="nav-icon">📋</span>
+        <span>Lista de Pesquisas</span>
+    </a>
+
+    <a href="{{ url_for('admin.nova_pesquisa') }}" class="nav-item">
+        <span class="nav-icon">➕</span>
+        <span>Nova Pesquisa</span>
+    </a>
+
+</nav>
+
+      <div class="sidebar-footer">
+        <a href="{{ url_for('logout') }}" class="nav-item">
+          <span class="nav-icon">↪</span>
+          <span>Sair do sistema</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <!-- HEADER -->
+      <header class="page-header">
+        <div>
+          <h1>Gestão de <strong>Pesquisas</strong></h1>
+          <p class="subtitle">Crie, edite e gerencie pesquisas</p>
+        </div>
+        
+      </header>
+
+      <!-- STAT CARDS -->
+      <section class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon icon-red">📄</div>
+          <div class="stat-info">
+            <span class="stat-number">8</span>
+            <span class="stat-label">Total de pesquisas criadas</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon icon-green">✔</div>
+          <div class="stat-info">
+            <span class="stat-number">4</span>
+            <span class="stat-label">Publicadas e ativas</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon icon-yellow">🕒</div>
+          <div class="stat-info">
+            <span class="stat-number">2</span>
+            <span class="stat-label">Programadas para iniciar</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon icon-gray">🗄</div>
+          <div class="stat-info">
+            <span class="stat-number">2</span>
+            <span class="stat-label">Encerradas</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SURVEYS TABLE PANEL -->
+      <section class="panel">
+
+        <div class="panel-header">
+          <h2>Minhas Pesquisas</h2>
+
+          <div class="panel-actions">
+            <div class="search-box">
+              <span class="search-icon">🔍</span>
+              <input type="text" placeholder="Buscar pesquisa...">
+            </div>
+
+            <select class="status-filter">
+              <option value="todos">Todos os status</option>
+              <option value="publicada">Publicada</option>
+              <option value="programada">Programada</option>
+              <option value="encerrada">Encerrada</option>
+            </select>
+          </div>
+        </div>
+
+        <table class="surveys-table">
+          <thead>
+            <tr>
+              <th>Título da Pesquisa</th>
+              <th>Campanha</th>
+              <th>Status</th>
+              <th>Período</th>
+              <th>Respostas</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {% for pesquisa in pesquisas %}
+
+            <tr>
+              <td class="col-title">
+                {% if pesquisa[4] %}
+                <img class="thumb" src="{{ url_for('static', filename='img/' + pesquisa[3]) }}" alt="">
+                {% else %}
+                <img class="thumb" src="{{ url_for('static', filename='img/banner_padrao.png') }}" alt="">
+                {% endif %}
+                <div>
+                  <span class="title-main">{{ pesquisa[2] }}</span>
+                  <span class="title-sub">{{ pesquisa[4] }}</span>
+                </div>
+              </td>
+              <td><span class="tag">Pesquisa</span></td>
+              <td>
+                  <span class="status status-{{ pesquisa[1]|lower }}">
+                      {{ pesquisa[1] }}
+                  </span>
+              </td>
+              <td>{{ pesquisa[5] }} até {{ pesquisa[6] }}</td>
+              <td>-</td>
+              <td class="col-actions">
+                <button class="icon-btn" title="Visualizar">👁</button>
+                <button class="icon-btn" title="Editar">✏️</button>
+                <button class="icon-btn" title="Relatório">📊</button>
+                <button class="icon-btn" title="Mais opções">⋮</button>
+              </td>
+            </tr>
+
+            {% endfor %}
+
+          </tbody>
+        </table>
+
+        <div class="panel-footer">
+          <span class="pagination-info">Mostrando 1 a 5 de 8 pesquisas</span>
+
+          <div class="pagination">
+            <button class="page-btn" disabled>‹</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">›</button>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

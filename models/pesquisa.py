@@ -2,6 +2,7 @@ import sqlite3
 from database.connection import conectar
 
 
+
 def cadastrar_pesquisa (titulo,descricao,imagem,data_inicio,data_fim,) :
     conexao = conectar()
     cursor = conexao.cursor()

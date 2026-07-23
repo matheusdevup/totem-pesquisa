@@ -10,31 +10,28 @@
 <body class="dashboard-body">
 
     <div class="page-container">
-        <div class="left-red-bar"></div>
+        
 
         <!-- ========================================= -->
         <!-- SIDEBAR                                   -->
         <!-- ========================================= -->
         <aside class="sidebar">
             <div class="sidebar-top">
-                <img src="{{ url_for('static', filename='img/logo.png') }}" class="sidebar-logo" alt="Macpet">
+
+                <img src="{{ url_for('static', filename='img/logo.png') }}"
+                     class="sidebar-logo"
+                     alt="Macpet">
 
                 <nav class="sidebar-menu">
                     <!-- Ajustado de 'pesquisas' para 'home' para carregar na raiz '/' -->
-                    <a href="{{ url_for('home') }}" class="menu-item active">
+                    <a href="{{ url_for('admin.lista_pesquisas') }}" class="menu-item">
                         <span>📋</span>
                         <span>Pesquisas</span>
                     </a>
 
                     {% if usuario.role == "admin" %}
-                        <a href="{{ url_for('admin.nova_pesquisa') }}" class="menu-item">
-                            <span>➕</span>
-                            <span>Nova Pesquisa</span>
-                        </a>
-                        <a href="#" class="menu-item">
-                            <span>📊</span>
-                            <span>Relatórios</span>
-                        </a>
+
+
                     {% endif %}
                 </nav>
             </div>

@@ -197,6 +197,7 @@ body {
     flex-shrink: 0;
     position: relative;
     border-right: 1px solid #EAEAEA;
+    border-left: none; /* Garante que não haverá outra borda CSS */
 }
 
 .sidebar::before {
@@ -205,7 +206,7 @@ body {
     left: 0;
     top: 0;
     bottom: 0;
-    width: 8px;
+    width: 6px; /* <-- Borda fina de 8px */
     background-color: #FF0D1D;
 }
 
