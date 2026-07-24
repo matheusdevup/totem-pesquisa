@@ -77,20 +77,26 @@ def responder_pesquisa(id_pesquisa):
     if not pesquisa:
         return redirect(url_for("home"))
 
-    # Busca a primeira pergunta e as opções no banco de dados
+    # Pega o parâmetro ?p=X da URL (se não tiver, assume 1)
+    pergunta_atual_numero = request.args.get('p', 1, type=int)
+
     conexao = conectar()
     cursor = conexao.cursor()
 
     cursor.execute(
-        "SELECT * FROM perguntas WHERE pesquisa_id = ? ORDER BY ordem ASC LIMIT 1",
+        "SELECT * FROM perguntas WHERE pesquisa_id = ? ORDER BY ordem ASC",
         (id_pesquisa,)
     )
-    pergunta = cursor.fetchone()
+    perguntas = cursor.fetchall()
+    total_perguntas = len(perguntas)
 
-    opcoes = []
-    if pergunta:
-        opcoes = consultar_opcoes(pergunta[0])
+    if not perguntas or pergunta_atual_numero < 1 or pergunta_atual_numero > total_perguntas:
+        conexao.close()
+        return redirect(url_for("home"))
 
+    # Pega a pergunta da posição atual
+    pergunta = perguntas[pergunta_atual_numero - 1]
+    opcoes = consultar_opcoes(pergunta[0])
     conexao.close()
 
     return render_template(
@@ -98,13 +104,13 @@ def responder_pesquisa(id_pesquisa):
         pesquisa=pesquisa,
         pergunta=pergunta,
         opcoes=opcoes,
-        pergunta_atual_numero=1,
-        total_perguntas=6
+        pergunta_atual_numero=pergunta_atual_numero,
+        total_perguntas=total_perguntas
     )
 
 
 # ======================================================
-# ROTA: SALVAR RESPOSTAS DA PESQUISA
+# ROTA: SALVAR RESPOSTAS E AVANÇAR
 # ======================================================
 @app.route("/salvar_respostas/<int:id_pesquisa>", methods=["POST"])
 def salvar_respostas(id_pesquisa):
@@ -112,11 +118,29 @@ def salvar_respostas(id_pesquisa):
         return redirect(url_for("home"))
 
     cpf_logado = session.get("user_cpf")
+    pergunta_id = request.form.get("pergunta_id")
+    respostas = request.form.getlist("resposta")
 
-    # Registra que este CPF respondeu a esta pesquisa
+    # Descobre em qual pergunta estamos
+    conexao = conectar()
+    cursor = conexao.cursor()
+    cursor.execute("SELECT id FROM perguntas WHERE pesquisa_id = ? ORDER BY ordem ASC", (id_pesquisa,))
+    perguntas_ids = [row[0] for row in cursor.fetchall()]
+    conexao.close()
+
+    total_perguntas = len(perguntas_ids)
+    ordem_atual = 1
+    if pergunta_id and int(pergunta_id) in perguntas_ids:
+        ordem_atual = perguntas_ids.index(int(pergunta_id)) + 1
+
+    proxima = ordem_atual + 1
+
+    # Se ainda tem pergunta, pula para a próxima (?p=2, ?p=3...)
+    if proxima <= total_perguntas:
+        return redirect(url_for("responder_pesquisa", id_pesquisa=id_pesquisa, p=proxima))
+
+    # Se era a última, encerra e vai para home
     registrar_resposta_usuario(id_pesquisa, cpf_logado)
-
-    # Redireciona de volta para a Home
     return redirect(url_for("home"))
 
 
